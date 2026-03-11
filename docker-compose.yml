@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  research-agent:
+    build: .
+    container_name: agentmesh-research
+    env_file: .env
+    environment:
+      - AGENT_TYPE=research
+    command: ["node", "-e", "
+      const { createResearchAgent } = require('./dist');
+      const agent = createResearchAgent({
+        network: process.env.HEDERA_NETWORK || 'testnet',
+        operatorAccountId: process.env.HEDERA_ACCOUNT_ID,
+        operatorPrivateKey: process.env.HEDERA_PRIVATE_KEY,
+      });
+      agent.start(process.env.REGISTRY_TOPIC, process.env.COORDINATION_TOPIC)
+        .then(p => console.log('ResearchAgent started:', p.id))
+        .catch(e => { console.error(e); process.exit(1); });
+    "]
+
+  analysis-agent:
+    build: .
+    container_name: agentmesh-analysis
+    env_file: .env
+    environment:
+      - AGENT_TYPE=analysis
+    depends_on:
+      - research-agent
+    command: ["node", "-e", "
+      const { createAnalysisAgent } = require('./dist');
+      const agent = createAnalysisAgent({
+        network: process.env.HEDERA_NETWORK || 'testnet',
+        operatorAccountId: process.env.HEDERA_ACCOUNT_ID,
+        operatorPrivateKey: process.env.HEDERA_PRIVATE_KEY,
+      });
+      agent.start(process.env.REGISTRY_TOPIC, process.env.COORDINATION_TOPIC)
+        .then(p => console.log('AnalysisAgent started:', p.id))
+        .catch(e => { console.error(e); process.exit(1); });
+    "]
+
+  coordinator-agent:
+    build: .
+    container_name: agentmesh-coordinator
+    env_file: .env
+    environment:
+      - AGENT_TYPE=coordinator
+    depends_on:
+      - research-agent
+      - analysis-agent
+    command: ["node", "-e", "
+      const { createCoordinatorAgent } = require('./dist');
+      const agent = createCoordinatorAgent({
+        network: process.env.HEDERA_NETWORK || 'testnet',
+        operatorAccountId: process.env.HEDERA_ACCOUNT_ID,
+        operatorPrivateKey: process.env.HEDERA_PRIVATE_KEY,
+      });
+      agent.start(process.env.REGISTRY_TOPIC, process.env.COORDINATION_TOPIC)
+        .then(p => console.log('CoordinatorAgent started:', p.id))
+        .catch(e => { console.error(e); process.exit(1); });
+    "]

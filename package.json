@@ -1,0 +1,32 @@
+{
+  "name": "agentmesh",
+  "version": "1.0.0",
+  "description": "Decentralized AI Agent Coordination on Hedera - AgentMesh enables AI agents to discover, communicate, and collaborate using Hedera's consensus service with MCP protocol support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "test": "jest --verbose",
+    "test:coverage": "jest --coverage",
+    "start": "ts-node src/index.ts",
+    "dashboard": "ts-node -e \"const { Dashboard } = require('./src/dashboard/server'); new Dashboard().start().then((u: string) => console.log('Dashboard: ' + u))\""
+  },
+  "keywords": ["hedera", "ai-agents", "mcp", "hcs-10", "decentralized", "agent-coordination"],
+  "author": "AgentMesh Team",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/jest": "^30.0.0",
+    "@types/node": "^25.4.0",
+    "@types/uuid": "^10.0.0",
+    "jest": "^30.3.0",
+    "ts-jest": "^29.4.6",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@hashgraph/sdk": "^2.80.0",
+    "@hashgraphonline/standards-sdk": "^0.1.165",
+    "dotenv": "^17.3.1",
+    "uuid": "^13.0.0"
+  }
+}
