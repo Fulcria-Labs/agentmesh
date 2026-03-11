@@ -67,5 +67,5 @@ npx ts-node -e "import { Dashboard } from './src'; new Dashboard().start().then(
 
 ### Links
 
-- Repository: [this repo]
+- Repository: https://github.com/Fulcria-Labs/agentmesh
 - Hedera Hashscan: https://hashscan.io/testnet
