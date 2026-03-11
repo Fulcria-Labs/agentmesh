@@ -9,7 +9,11 @@
     "test": "jest --verbose",
     "test:coverage": "jest --coverage",
     "start": "ts-node src/index.ts",
-    "dashboard": "ts-node -e \"const { Dashboard } = require('./src/dashboard/server'); new Dashboard().start().then((u: string) => console.log('Dashboard: ' + u))\""
+    "demo:local": "ts-node examples/local-simulation.ts",
+    "demo:testnet": "ts-node examples/multi-agent-demo.ts",
+    "dashboard": "ts-node -e \"const { Dashboard } = require('./src/dashboard/server'); new Dashboard().start().then((u: string) => console.log('Dashboard: ' + u))\"",
+    "docker:build": "docker build -t agentmesh:latest .",
+    "docker:up": "docker-compose up"
   },
   "keywords": ["hedera", "ai-agents", "mcp", "hcs-10", "decentralized", "agent-coordination"],
   "author": "AgentMesh Team",

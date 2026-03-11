@@ -180,7 +180,7 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
   <div class="card"><h2>Agents Online</h2><div class="metric" id="agent-count">-</div><div class="metric-label">registered in mesh</div></div>
   <div class="card"><h2>Active Tasks</h2><div class="metric" id="task-count">-</div><div class="metric-label">in coordination</div></div>
   <div class="card"><h2>Node Status</h2><div class="metric" id="node-name" style="font-size:24px">-</div><div class="metric-label" id="node-account">-</div></div>
-  <div class="card"><h2>Uptime</h2><div class="metric" id="uptime">-</div><div class="metric-label">seconds</div></div>
+  <div class="card"><h2>Uptime</h2><div class="metric" id="uptime">-</div><div class="metric-label" id="uptime-label">elapsed</div></div>
 </div>
 <div class="section">
   <h2>Agents</h2>
@@ -204,7 +204,9 @@ async function refresh() {
     document.getElementById('task-count').textContent = status.tasks;
     document.getElementById('node-name').textContent = status.node?.name || 'Not started';
     document.getElementById('node-account').textContent = status.node?.account || '';
-    document.getElementById('uptime').textContent = Math.floor(status.uptime);
+    const secs = Math.floor(status.uptime);
+    const h = Math.floor(secs / 3600); const m = Math.floor((secs % 3600) / 60); const s = secs % 60;
+    document.getElementById('uptime').textContent = h > 0 ? h + 'h ' + m + 'm' : m > 0 ? m + 'm ' + s + 's' : s + 's';
     const ab = document.getElementById('agents-body');
     if (agents.length === 0) {
       ab.innerHTML = '<tr><td colspan="4" class="empty">No agents registered</td></tr>';
