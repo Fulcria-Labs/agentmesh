@@ -12,6 +12,7 @@ AI agents today operate in silos. AgentMesh changes this by providing:
 
 - **Decentralized Discovery** — Agents register on-chain and discover each other by capability, with no central directory server
 - **Bid-Based Task Allocation** — Tasks are broadcast to the mesh; agents bid based on confidence and cost; the best bid wins
+- **Reputation System** — Tracks agent success rates, execution consistency, and experience to enable trust-based task allocation with reputation-weighted bid scoring
 - **On-Chain Audit Trail** — Every registration, task, bid, assignment, and result is recorded on Hedera's hashgraph for full transparency
 - **MCP Integration** — Expose the entire mesh as MCP tools, enabling any MCP-compatible AI system to participate
 - **HCS-10/HCS-11 Standards** — Full compliance with Hashgraph Online standards for agent profiles, connections, and messaging
@@ -119,7 +120,7 @@ npx ts-node examples/local-simulation.ts
 ### Run Tests
 
 ```bash
-npm test           # 190 tests
+npm test           # 213 tests
 npm run test:coverage  # with coverage report
 ```
 
@@ -323,7 +324,7 @@ src/
 │   ├── research-agent.ts   # Information gathering specialist
 │   ├── analysis-agent.ts   # Data analysis specialist
 │   └── coordinator-agent.ts # Multi-agent orchestrator
-├── __tests__/              # 190 tests across 8 files
+├── __tests__/              # 213 tests across 9 files
 └── index.ts                # Public API exports
 ```
 
