@@ -192,6 +192,11 @@ const DASHBOARD_HTML = `<!DOCTYPE html>
 </div>
 <div class="refresh-note">Auto-refreshes every 3 seconds &middot; Powered by Hedera Consensus Service</div>
 <script>
+function esc(s) {
+  var d = document.createElement('div');
+  d.appendChild(document.createTextNode(s));
+  return d.innerHTML;
+}
 async function refresh() {
   try {
     const [status, agents, tasks] = await Promise.all([
@@ -212,10 +217,10 @@ async function refresh() {
       ab.innerHTML = '<tr><td colspan="4" class="empty">No agents registered</td></tr>';
     } else {
       ab.innerHTML = agents.map(a =>
-        '<tr><td><strong>' + a.name + '</strong><br><small style="color:#666">' + (a.description||'').substring(0,60) + '</small></td>'
-        + '<td><span class="badge badge-' + a.status + '">' + a.status + '</span></td>'
-        + '<td>' + a.capabilities.map(c => '<span class="badge badge-cap">' + c + '</span>').join('') + '</td>'
-        + '<td style="font-family:monospace;font-size:12px">' + a.account + '</td></tr>'
+        '<tr><td><strong>' + esc(a.name) + '</strong><br><small style="color:#666">' + esc((a.description||'').substring(0,60)) + '</small></td>'
+        + '<td><span class="badge badge-' + esc(a.status) + '">' + esc(a.status) + '</span></td>'
+        + '<td>' + a.capabilities.map(c => '<span class="badge badge-cap">' + esc(c) + '</span>').join('') + '</td>'
+        + '<td style="font-family:monospace;font-size:12px">' + esc(a.account) + '</td></tr>'
       ).join('');
     }
     const tb = document.getElementById('tasks-body');
@@ -223,10 +228,10 @@ async function refresh() {
       tb.innerHTML = '<tr><td colspan="5" class="empty">No active tasks</td></tr>';
     } else {
       tb.innerHTML = tasks.map(t =>
-        '<tr><td>' + t.description.substring(0,80) + '</td>'
-        + '<td><span class="badge badge-' + t.priority + '">' + t.priority + '</span></td>'
-        + '<td>' + t.capabilities.map(c => '<span class="badge badge-cap">' + c + '</span>').join('') + '</td>'
-        + '<td>' + t.bids + '</td><td>' + t.assignments + '</td></tr>'
+        '<tr><td>' + esc(t.description.substring(0,80)) + '</td>'
+        + '<td><span class="badge badge-' + esc(t.priority) + '">' + esc(t.priority) + '</span></td>'
+        + '<td>' + t.capabilities.map(c => '<span class="badge badge-cap">' + esc(c) + '</span>').join('') + '</td>'
+        + '<td>' + esc(String(t.bids)) + '</td><td>' + esc(String(t.assignments)) + '</td></tr>'
       ).join('');
     }
   } catch(e) { document.getElementById('status-text').textContent = 'Error'; }

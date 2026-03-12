@@ -33,7 +33,7 @@
 - Hedera SDK (@hashgraph/sdk v2.80+)
 - HCS-10 Standards (@hashgraphonline/standards-sdk)
 - Model Context Protocol (MCP)
-- 190 passing tests across 8 suites
+- 1982 tests across 54 suites with 99%+ code coverage
 
 ## Slide 7: Demo
 - Screenshot or video embed of multi-agent collaboration

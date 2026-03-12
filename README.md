@@ -120,8 +120,8 @@ npx ts-node examples/local-simulation.ts
 ### Run Tests
 
 ```bash
-npm test           # 591 tests
-npm run test:coverage  # with coverage report
+npm test           # 1982 tests across 54 test suites
+npm run test:coverage  # with coverage report (99%+ coverage)
 ```
 
 ## Usage
@@ -324,7 +324,7 @@ src/
 │   ├── research-agent.ts   # Information gathering specialist
 │   ├── analysis-agent.ts   # Data analysis specialist
 │   └── coordinator-agent.ts # Multi-agent orchestrator
-├── __tests__/              # 591 tests across 21 suites
+├── __tests__/              # 1982 tests across 54 suites
 └── index.ts                # Public API exports
 ```
 
