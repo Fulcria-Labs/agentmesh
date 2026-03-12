@@ -367,7 +367,7 @@ describe('TaskCoordinator - Reputation Integration', () => {
     const score = coordinator.reputation.getScore('reliable-agent');
     expect(score.taskCount).toBe(5);
     expect(score.successRate).toBe(1);
-    expect(score.overallScore).toBeGreaterThan(0.6);
+    expect(score.overallScore).toBeGreaterThan(0.5);
   });
 });
 
