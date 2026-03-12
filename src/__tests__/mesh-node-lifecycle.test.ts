@@ -248,14 +248,11 @@ describe('MeshNode Lifecycle', () => {
 
     it('should emit message event for valid inbound JSON', async () => {
       const node = createNode();
-      let inboundCallback: ((msg: any) => void) | null = null;
+      const callbacks: Array<(msg: any) => void> = [];
 
       const mockProto = HederaClient.prototype as any;
-      mockProto.subscribeTopic.mockImplementation((topicId: string, cb: any) => {
-        // The third subscribeTopic call is for inbound (after registry and coordinator)
-        if (topicId === '0.0.100') {
-          inboundCallback = cb;
-        }
+      mockProto.subscribeTopic.mockImplementation((_topicId: string, cb: any) => {
+        callbacks.push(cb);
       });
 
       await startNode(node);
@@ -263,26 +260,26 @@ describe('MeshNode Lifecycle', () => {
       const spy = jest.fn();
       node.on('message', spy);
 
-      if (inboundCallback) {
-        inboundCallback({
-          contents: Buffer.from(JSON.stringify({ type: 'data.request', data: 'hello' })),
-          sequenceNumber: 1,
-          consensusTimestamp: null,
-        });
-      }
+      // The last subscribeTopic call is for the inbound topic
+      const inboundCallback = callbacks[callbacks.length - 1];
+      expect(inboundCallback).toBeDefined();
+
+      inboundCallback!({
+        contents: Buffer.from(JSON.stringify({ type: 'data.request', data: 'hello' })),
+        sequenceNumber: 1,
+        consensusTimestamp: null,
+      });
 
       expect(spy).toHaveBeenCalledWith(expect.objectContaining({ type: 'data.request', data: 'hello' }));
     });
 
     it('should silently ignore malformed inbound messages', async () => {
       const node = createNode();
-      let inboundCallback: ((msg: any) => void) | null = null;
+      const callbacks: Array<(msg: any) => void> = [];
 
       const mockProto = HederaClient.prototype as any;
-      mockProto.subscribeTopic.mockImplementation((topicId: string, cb: any) => {
-        if (topicId === '0.0.100') {
-          inboundCallback = cb;
-        }
+      mockProto.subscribeTopic.mockImplementation((_topicId: string, cb: any) => {
+        callbacks.push(cb);
       });
 
       await startNode(node);
@@ -290,14 +287,15 @@ describe('MeshNode Lifecycle', () => {
       const spy = jest.fn();
       node.on('message', spy);
 
-      if (inboundCallback) {
-        // Should not throw
-        inboundCallback({
-          contents: Buffer.from('not valid json'),
-          sequenceNumber: 1,
-          consensusTimestamp: null,
-        });
-      }
+      const inboundCallback = callbacks[callbacks.length - 1];
+      expect(inboundCallback).toBeDefined();
+
+      // Should not throw
+      inboundCallback!({
+        contents: Buffer.from('not valid json'),
+        sequenceNumber: 1,
+        consensusTimestamp: null,
+      });
 
       expect(spy).not.toHaveBeenCalled();
     });
