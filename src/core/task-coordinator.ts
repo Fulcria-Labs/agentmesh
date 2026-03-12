@@ -15,6 +15,7 @@ import {
   AgentProfile,
 } from './types';
 import { EventEmitter } from 'events';
+import { ReputationManager } from './reputation';
 
 export interface TaskBid {
   taskId: string;
@@ -34,11 +35,13 @@ export class TaskCoordinator extends EventEmitter {
   private assignments: Map<string, TaskAssignment[]> = new Map();
   private bids: Map<string, TaskBid[]> = new Map();
   private results: Map<string, TaskResult> = new Map();
+  readonly reputation: ReputationManager;
 
   constructor(hederaClient: HederaClient, registry: AgentRegistry) {
     super();
     this.hederaClient = hederaClient;
     this.registry = registry;
+    this.reputation = new ReputationManager();
   }
 
   async initialize(existingTopicId?: string): Promise<string> {
@@ -182,6 +185,15 @@ export class TaskCoordinator extends EventEmitter {
       JSON.stringify(message)
     );
 
+    // Record successful completion in reputation system
+    if (taskAssignments) {
+      const completedAssignment = taskAssignments.find(a => a.agentId === agentId);
+      if (completedAssignment && completedAssignment.startedAt) {
+        const executionTime = (completedAssignment.completedAt || Date.now()) - completedAssignment.startedAt;
+        this.reputation.recordSuccess(agentId, executionTime, completedAssignment.cost || 0);
+      }
+    }
+
     // Check if all assignments for this task are complete
     this.checkTaskCompletion(taskId);
   }
@@ -214,6 +226,9 @@ export class TaskCoordinator extends EventEmitter {
       JSON.stringify(message)
     );
 
+    // Record failure in reputation system
+    this.reputation.recordFailure(agentId);
+
     this.emit('task:failed', { taskId, agentId, error });
 
     // Check if all assignments are now done (completed or failed)
@@ -224,10 +239,15 @@ export class TaskCoordinator extends EventEmitter {
     const taskBids = this.bids.get(taskId);
     if (!taskBids || taskBids.length === 0) return null;
 
-    // Score bids: higher confidence and lower cost are better
+    // Score bids using reputation-adjusted scoring
+    // Combines confidence/cost ratio with historical agent performance
     return taskBids.reduce((best, current) => {
-      const bestScore = best.confidence / (best.estimatedCost + 1);
-      const currentScore = current.confidence / (current.estimatedCost + 1);
+      const bestScore = this.reputation.getReputationAdjustedBidScore(
+        best.agentId, best.confidence, best.estimatedCost,
+      );
+      const currentScore = this.reputation.getReputationAdjustedBidScore(
+        current.agentId, current.confidence, current.estimatedCost,
+      );
       return currentScore > bestScore ? current : best;
     });
   }

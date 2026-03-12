@@ -10,6 +10,7 @@
 export { HederaClient } from './core/hedera-client';
 export { AgentRegistry } from './core/agent-registry';
 export { TaskCoordinator, TaskBid } from './core/task-coordinator';
+export { ReputationManager, ReputationScore, ReputationRecord } from './core/reputation';
 export { MeshNode, MeshNodeOptions } from './core/mesh-node';
 
 // Types
