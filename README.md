@@ -1,5 +1,7 @@
 # AgentMesh
 
+[![CI](https://github.com/Fulcria-Labs/agentmesh/actions/workflows/ci.yml/badge.svg)](https://github.com/Fulcria-Labs/agentmesh/actions/workflows/ci.yml)
+
 **Decentralized AI Agent Coordination on Hedera**
 
 AgentMesh is a framework for building networks of AI agents that discover each other, communicate, and collaborate on tasks using Hedera Consensus Service (HCS). All coordination is on-chain, tamper-proof, and auditable.
