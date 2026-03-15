@@ -76,6 +76,7 @@ AI agents today operate in silos. AgentMesh changes this by providing:
 | **MCPServer** | Exposes the mesh as 6 MCP tools for integration with any MCP-compatible AI system |
 | **HCS10Bridge** | Bridge to HCS-10/HCS-11 standards. Creates compliant agent profiles, manages connections, enables HOL ecosystem interop |
 | **StandardsRegistry** | Integrates with the HOL Guarded Registry for global agent discovery across the entire HCS-10 ecosystem |
+| **TaskAnalytics** | Mesh-wide performance analytics: per-agent/task-type statistics, bottleneck detection, load balancing recommendations, specialization scoring, and trend analysis |
 | **Dashboard** | Zero-dependency web UI for real-time mesh monitoring. Agents, tasks, bids, and metrics at a glance |
 
 ### Message Protocol
@@ -122,7 +123,7 @@ npx ts-node examples/local-simulation.ts
 ### Run Tests
 
 ```bash
-npm test           # 1982 tests across 54 test suites
+npm test           # 2144 tests across 56 test suites
 npm run test:coverage  # with coverage report (99%+ coverage)
 ```
 
@@ -314,7 +315,8 @@ src/
 │   ├── hedera-client.ts    # Hedera SDK wrapper
 │   ├── agent-registry.ts   # Decentralized agent directory
 │   ├── task-coordinator.ts # Bid-based task orchestration
-│   └── mesh-node.ts        # Agent node entry point
+│   ├── mesh-node.ts        # Agent node entry point
+│   └── task-analytics.ts   # Mesh performance analytics engine
 ├── hol/
 │   ├── hcs10-bridge.ts     # HCS-10/HCS-11 standards bridge
 │   └── standards-registry.ts # HOL Guarded Registry integration
@@ -326,7 +328,7 @@ src/
 │   ├── research-agent.ts   # Information gathering specialist
 │   ├── analysis-agent.ts   # Data analysis specialist
 │   └── coordinator-agent.ts # Multi-agent orchestrator
-├── __tests__/              # 1982 tests across 54 suites
+├── __tests__/              # 2144 tests across 56 suites
 └── index.ts                # Public API exports
 ```
 

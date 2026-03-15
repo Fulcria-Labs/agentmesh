@@ -39,5 +39,21 @@ export { createCoordinatorAgent } from './agents/coordinator-agent';
 export { HCS10Bridge, HCS10BridgeConfig, StandardsAgentInfo } from './hol/hcs10-bridge';
 export { StandardsRegistry, RegistrySearchOptions, RegistryAgent } from './hol/standards-registry';
 
+// Analytics
+export {
+  TaskAnalytics,
+  TaskEvent,
+  AgentStats,
+  TaskTypeStats,
+  PerformanceReport,
+  BottleneckReport,
+  BottleneckReason,
+  LoadBalancingRecommendation,
+  SpecializationScore,
+  TrendDirection,
+  TrendAnalysis,
+  TaskAnalyticsConfig,
+} from './core/task-analytics';
+
 // Dashboard
 export { Dashboard, DashboardOptions } from './dashboard/server';
