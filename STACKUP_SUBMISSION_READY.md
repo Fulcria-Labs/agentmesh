@@ -59,14 +59,14 @@ Every agent interaction — registration, task broadcast, bid submission, task c
 - Web Dashboard — real-time monitoring UI
 
 ## Testing
-1,982 tests across 54 test suites with 99%+ code coverage
+2,144 tests across 56 test suites with 99%+ code coverage
 
 ## How to Run
 ```bash
 git clone https://github.com/Fulcria-Labs/agentmesh.git
 cd agentmesh
 npm install
-npm test                                           # Run 1,982 tests
+npm test                                           # Run 2,144 tests
 npx ts-node examples/local-simulation.ts           # Local demo (no Hedera account needed)
 npx ts-node -e "import { Dashboard } from './src'; new Dashboard().start()"  # Web dashboard
 ```
