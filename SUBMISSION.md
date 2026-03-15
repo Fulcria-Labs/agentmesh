@@ -24,7 +24,7 @@ AgentMesh is a decentralized AI agent coordination framework built on Hedera Con
 - Hedera SDK (@hashgraph/sdk)
 - HCS-10/HCS-11 Standards (@hashgraphonline/standards-sdk)
 - Model Context Protocol (MCP)
-- 1982 tests across 54 test suites with 99%+ code coverage
+- 2144 tests across 56 test suites with 99%+ code coverage
 
 ### HOL Integration (Bounty Target: $8K)
 
@@ -44,13 +44,13 @@ AgentMesh deeply integrates with the Hashgraph Online Standards SDK:
 - [x] HOL Guarded Registry integration (StandardsRegistry)
 - [x] HCS-11 capability mapping (19 capabilities)
 - [x] Web Dashboard with real-time monitoring
-- [x] 1975 tests across 53 test suites with 99%+ code coverage
+- [x] 2144 tests across 56 test suites with 99%+ code coverage
 - [x] README.md with architecture docs
 - [x] Example scripts (local simulation + testnet demo)
 - [x] Docker setup (Dockerfile + docker-compose.yml)
 - [ ] Eric registers on StackUp
 - [ ] Hedera testnet account for live demo
-- [ ] Demo video
+- [x] Demo video (agentmesh-demo.mp4, agentmesh-demo.gif)
 
 ### Demo
 
