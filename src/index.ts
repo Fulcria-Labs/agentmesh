@@ -55,5 +55,27 @@ export {
   TaskAnalyticsConfig,
 } from './core/task-analytics';
 
+// Negotiation
+export {
+  AgentNegotiation,
+  NegotiationPhase,
+  ResolutionStrategy,
+  NegotiationOffer,
+  Negotiation,
+  NegotiationSummary,
+  NegotiationAgentStats,
+  NegotiationConfig,
+} from './core/agent-negotiation';
+
+// Service Mesh (routing & load balancing)
+export {
+  ServiceMesh,
+  ServiceRoute,
+  RoutingDecision,
+  RoutingStrategy,
+  LoadMetrics,
+  ServiceMeshConfig,
+} from './core/service-mesh';
+
 // Dashboard
 export { Dashboard, DashboardOptions } from './dashboard/server';
