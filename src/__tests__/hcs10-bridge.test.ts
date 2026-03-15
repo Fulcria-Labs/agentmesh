@@ -3,8 +3,10 @@
  */
 
 import { HCS10Bridge } from '../hol/hcs10-bridge';
-import { AIAgentCapability } from '@hashgraphonline/standards-sdk';
+import * as standardsSdk from '@hashgraphonline/standards-sdk';
 import { AgentCapability, MeshConfig } from '../core/types';
+
+const { AIAgentCapability } = standardsSdk;
 
 // Mock the standards SDK
 jest.mock('@hashgraphonline/standards-sdk', () => {
@@ -83,7 +85,7 @@ jest.mock('@hashgraphonline/standards-sdk', () => {
   };
 });
 
-const { __mockClient: mockClient } = require('@hashgraphonline/standards-sdk');
+const mockClient = (standardsSdk as any).__mockClient;
 
 const TEST_CONFIG: MeshConfig = {
   network: 'testnet',
@@ -129,7 +131,7 @@ describe('HCS10Bridge', () => {
     });
 
     it('should pass config to HCS10Client', () => {
-      const { HCS10Client } = require('@hashgraphonline/standards-sdk');
+      const { HCS10Client } = standardsSdk as any;
       expect(HCS10Client).toHaveBeenCalledWith(
         expect.objectContaining({
           network: 'testnet',
@@ -281,7 +283,7 @@ describe('HCS10Bridge', () => {
     });
 
     it('should use AgentBuilder with correct properties', async () => {
-      const { AgentBuilder } = require('@hashgraphonline/standards-sdk');
+      const { AgentBuilder } = standardsSdk as any;
       await bridge.createStandardsAgent(agentProfile);
 
       const builderInstance = AgentBuilder.mock.results[AgentBuilder.mock.results.length - 1].value;
@@ -292,7 +294,7 @@ describe('HCS10Bridge', () => {
     });
 
     it('should set model when provided', async () => {
-      const { AgentBuilder } = require('@hashgraphonline/standards-sdk');
+      const { AgentBuilder } = standardsSdk as any;
       await bridge.createStandardsAgent(agentProfile, { model: 'gpt-4' });
 
       const builderInstance = AgentBuilder.mock.results[AgentBuilder.mock.results.length - 1].value;
@@ -300,7 +302,7 @@ describe('HCS10Bridge', () => {
     });
 
     it('should set creator when provided', async () => {
-      const { AgentBuilder } = require('@hashgraphonline/standards-sdk');
+      const { AgentBuilder } = standardsSdk as any;
       await bridge.createStandardsAgent(agentProfile, { creator: 'AgentMesh' });
 
       const builderInstance = AgentBuilder.mock.results[AgentBuilder.mock.results.length - 1].value;
@@ -308,7 +310,7 @@ describe('HCS10Bridge', () => {
     });
 
     it('should add framework metadata', async () => {
-      const { AgentBuilder } = require('@hashgraphonline/standards-sdk');
+      const { AgentBuilder } = standardsSdk as any;
       await bridge.createStandardsAgent(agentProfile);
 
       const builderInstance = AgentBuilder.mock.results[AgentBuilder.mock.results.length - 1].value;

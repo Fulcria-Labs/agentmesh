@@ -24,7 +24,7 @@ AgentMesh is a decentralized AI agent coordination framework built on Hedera Con
 - Hedera SDK (@hashgraph/sdk)
 - HCS-10/HCS-11 Standards (@hashgraphonline/standards-sdk)
 - Model Context Protocol (MCP)
-- 2144 tests across 56 test suites with 99%+ code coverage
+- 2425 tests across 60 test suites with 99%+ code coverage
 
 ### HOL Integration (Bounty Target: $8K)
 

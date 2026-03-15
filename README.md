@@ -123,7 +123,7 @@ npx ts-node examples/local-simulation.ts
 ### Run Tests
 
 ```bash
-npm test           # 2144 tests across 56 test suites
+npm test           # 2425 tests across 60 test suites
 npm run test:coverage  # with coverage report (99%+ coverage)
 ```
 

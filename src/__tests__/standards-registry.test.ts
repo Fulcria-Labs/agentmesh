@@ -3,8 +3,10 @@
  */
 
 import { StandardsRegistry } from '../hol/standards-registry';
-import { AIAgentCapability } from '@hashgraphonline/standards-sdk';
+import * as standardsSdkModule from '@hashgraphonline/standards-sdk';
 import { MeshConfig } from '../core/types';
+
+const { AIAgentCapability } = standardsSdkModule;
 
 // Mock the standards SDK
 jest.mock('@hashgraphonline/standards-sdk', () => {
@@ -101,7 +103,7 @@ jest.mock('@hashgraphonline/standards-sdk', () => {
   };
 });
 
-const { __mockClient: mockClient } = require('@hashgraphonline/standards-sdk');
+const mockClient = (standardsSdkModule as any).__mockClient;
 
 const TEST_CONFIG: MeshConfig = {
   network: 'testnet',
@@ -123,7 +125,7 @@ describe('StandardsRegistry', () => {
     });
 
     it('should initialize HCS10Client with correct config', () => {
-      const { HCS10Client } = require('@hashgraphonline/standards-sdk');
+      const { HCS10Client } = standardsSdkModule as any;
       expect(HCS10Client).toHaveBeenCalledWith(
         expect.objectContaining({
           network: 'testnet',

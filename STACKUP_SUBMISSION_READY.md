@@ -59,7 +59,7 @@ Every agent interaction — registration, task broadcast, bid submission, task c
 - Web Dashboard — real-time monitoring UI
 
 ## Testing
-2,144 tests across 56 test suites with 99%+ code coverage
+2,425 tests across 60 test suites with 99%+ code coverage
 
 ## How to Run
 ```bash

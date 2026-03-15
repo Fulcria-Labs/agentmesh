@@ -15,7 +15,14 @@
     "docker:build": "docker build -t agentmesh:latest .",
     "docker:up": "docker-compose up"
   },
-  "keywords": ["hedera", "ai-agents", "mcp", "hcs-10", "decentralized", "agent-coordination"],
+  "keywords": [
+    "hedera",
+    "ai-agents",
+    "mcp",
+    "hcs-10",
+    "decentralized",
+    "agent-coordination"
+  ],
   "author": "AgentMesh Team",
   "license": "MIT",
   "devDependencies": {
@@ -25,7 +32,8 @@
     "jest": "^30.3.0",
     "ts-jest": "^29.4.6",
     "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "vitest": "^4.1.0"
   },
   "dependencies": {
     "@hashgraph/sdk": "^2.80.0",

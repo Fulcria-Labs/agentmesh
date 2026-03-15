@@ -15,6 +15,7 @@ import { HCS10Bridge, HCS10BridgeConfig } from '../hol/hcs10-bridge';
 import { StandardsRegistry } from '../hol/standards-registry';
 import { AgentProfile, AgentCapability, MessageType, CoordinationMessage, MeshConfig } from '../core/types';
 import * as http from 'http';
+import * as standardsSdkModule from '@hashgraphonline/standards-sdk';
 
 // ─── Mocks ───────────────────────────────────────────────────────────────────
 
@@ -112,7 +113,7 @@ jest.mock('@hashgraphonline/standards-sdk', () => {
   };
 });
 
-const { __mockClient: mockStandardsClient } = require('@hashgraphonline/standards-sdk');
+const mockStandardsClient = (standardsSdkModule as any).__mockClient;
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
 
@@ -744,13 +745,13 @@ describe('HCS-10 Bridge Edge Cases', () => {
   });
 
   test('mapCapabilities always includes MULTI_AGENT_COORDINATION', () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     const caps = bridge.mapCapabilities([]);
     expect(caps).toContain(AIAgentCapability.MULTI_AGENT_COORDINATION);
   });
 
   test('mapCapabilities maps known capabilities correctly', () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     const caps = bridge.mapCapabilities([
       { name: 'web_research', description: 'Search', inputSchema: {}, outputSchema: {} },
       { name: 'code_generation', description: 'Code', inputSchema: {}, outputSchema: {} },
@@ -761,7 +762,7 @@ describe('HCS-10 Bridge Edge Cases', () => {
   });
 
   test('mapCapabilities handles unknown capability names gracefully', () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     const caps = bridge.mapCapabilities([
       { name: 'teleportation', description: 'Unknown', inputSchema: {}, outputSchema: {} },
     ]);
@@ -770,7 +771,7 @@ describe('HCS-10 Bridge Edge Cases', () => {
   });
 
   test('mapCapabilities deduplicates when multiple mesh caps map to same HCS-11 cap', () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     // Both web_research and fact_check map to KNOWLEDGE_RETRIEVAL
     const caps = bridge.mapCapabilities([
       { name: 'web_research', description: 'A', inputSchema: {}, outputSchema: {} },
@@ -949,7 +950,7 @@ describe('Standards Registry Edge Cases', () => {
   });
 
   test('searchAgents with capability filter passes tags', async () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     await stdRegistry.searchAgents({ capabilities: [AIAgentCapability.CODE_GENERATION] });
     expect(mockStandardsClient.searchRegistrations).toHaveBeenCalledWith(
       expect.objectContaining({ tags: [AIAgentCapability.CODE_GENERATION] })
@@ -964,7 +965,7 @@ describe('Standards Registry Edge Cases', () => {
   });
 
   test('toMeshProfile converts registry agent to AgentProfile', () => {
-    const { AIAgentCapability } = require('@hashgraphonline/standards-sdk');
+    const { AIAgentCapability } = standardsSdkModule as any;
     const agent = {
       accountId: '0.0.200',
       inboundTopicId: '0.0.2001',

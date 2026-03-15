@@ -246,21 +246,25 @@ describe('ReputationManager', () => {
   });
 
   describe('events', () => {
-    it('emits reputation:updated on success', (done) => {
-      reputation.on('reputation:updated', (score) => {
-        expect(score.agentId).toBe('agent-1');
-        expect(score.taskCount).toBe(1);
-        done();
+    it('emits reputation:updated on success', () => {
+      return new Promise<void>((resolve) => {
+        reputation.on('reputation:updated', (score) => {
+          expect(score.agentId).toBe('agent-1');
+          expect(score.taskCount).toBe(1);
+          resolve();
+        });
+        reputation.recordSuccess('agent-1', 1000, 5);
       });
-      reputation.recordSuccess('agent-1', 1000, 5);
     });
 
-    it('emits reputation:updated on failure', (done) => {
-      reputation.on('reputation:updated', (score) => {
-        expect(score.agentId).toBe('agent-1');
-        done();
+    it('emits reputation:updated on failure', () => {
+      return new Promise<void>((resolve) => {
+        reputation.on('reputation:updated', (score) => {
+          expect(score.agentId).toBe('agent-1');
+          resolve();
+        });
+        reputation.recordFailure('agent-1');
       });
-      reputation.recordFailure('agent-1');
     });
   });
 });

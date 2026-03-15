@@ -68,23 +68,25 @@ describe('MeshNode - Inbound Message Handling', () => {
     await node.stop();
   });
 
-  it('should emit message event for valid JSON inbound messages', (done) => {
-    node.on('message', (msg) => {
-      expect(msg.type).toBe('data.request');
-      expect(msg.payload.data).toBe('hello');
-      done();
-    });
+  it('should emit message event for valid JSON inbound messages', () => {
+    return new Promise<void>((resolve) => {
+      node.on('message', (msg) => {
+        expect(msg.type).toBe('data.request');
+        expect(msg.payload.data).toBe('hello');
+        resolve();
+      });
 
-    const message = JSON.stringify({
-      type: 'data.request',
-      senderId: 'remote-agent',
-      payload: { data: 'hello' },
-      timestamp: Date.now(),
-    });
+      const message = JSON.stringify({
+        type: 'data.request',
+        senderId: 'remote-agent',
+        payload: { data: 'hello' },
+        timestamp: Date.now(),
+      });
 
-    inboundCallback({
-      contents: Buffer.from(message),
-      sequenceNumber: 1,
+      inboundCallback({
+        contents: Buffer.from(message),
+        sequenceNumber: 1,
+      });
     });
   });
 

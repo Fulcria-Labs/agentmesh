@@ -10,6 +10,7 @@
 
 import { HederaClient } from '../core/hedera-client';
 import { MeshConfig } from '../core/types';
+import * as SDK_MODULE from '@hashgraph/sdk';
 
 // ---- Mock all Hedera SDK classes ----
 
@@ -114,8 +115,8 @@ jest.mock('@hashgraph/sdk', () => {
   };
 });
 
-// Re-import after mock
-const SDK = require('@hashgraph/sdk');
+// Use the mocked module via import
+const SDK = SDK_MODULE as any;
 
 // ---- Helpers ----
 
