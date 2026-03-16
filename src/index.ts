@@ -79,3 +79,30 @@ export {
 
 // Dashboard
 export { Dashboard, DashboardOptions } from './dashboard/server';
+
+// HTS Staking & Incentives
+export {
+  StakingPool,
+  calculateReward,
+  calculateSlashAmount,
+  getEconomicMetrics,
+  estimateAPY,
+  SlashSeverity,
+  SLASH_RATES,
+  SLASH_COOLDOWNS,
+} from './core/agent-staking';
+export type {
+  HederaTokenConfig,
+  TokenTransfer,
+  StakingTransaction,
+  StakingConfig,
+  PoolStatus,
+  StakePosition,
+  StakingPoolState,
+  PoolStatusView,
+  SlashRecord,
+  EconomicMetrics,
+  GovernanceProposal,
+  ProposalView,
+  GovernanceParam,
+} from './core/agent-staking';
